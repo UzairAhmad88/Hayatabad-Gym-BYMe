@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Member {
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  phone     String
+  goal      String?
+  status    String    @default("lead")
+  joinDate  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Trainer {
+  id             String   @id @default(cuid())
+  name           String
+  bio            String?
+  specialization String
+  experience     String?
+  image          String?
+  certifications String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Program {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  duration    String?
+  difficulty  String?
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MembershipApplication {
+  id            String   @id @default(cuid())
+  name          String
+  phone         String
+  email         String?
+  membership    String?
+  goal          String?
+  preferredTime String?
+  status        String   @default("new")
+  createdAt     DateTime @default(now())
+}
+
+model TrialBooking {
+  id        String    @id @default(cuid())
+  name      String
+  phone     String
+  date      DateTime?
+  time      String?
+  goal      String?
+  status    String    @default("new")
+  createdAt DateTime  @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String?
+  email     String?
+  message   String
+  status    String   @default("unread")
+  createdAt DateTime @default(now())
+}
